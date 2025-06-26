@@ -30,6 +30,14 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+
+        // 只打包中文资源
+        resConfigs("zh")
+
+        // 只打包arm64-v8a架构
+        ndk {
+            abiFilters.add("arm64-v8a")
+        }
     }
 
     buildTypes {

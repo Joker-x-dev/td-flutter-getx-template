@@ -8,7 +8,11 @@ import 'base_network_state.dart';
 /// 公共控制器 主要是对网络请求进行封装
 class BaseNetworkLogic<T> extends BaseLogic {
   /// 状态
-  final BaseNetworkState networkState = BaseNetworkState();
+  final BaseNetworkState networkState;
+
+  /// 构造函数，允许注入自定义状态
+  BaseNetworkLogic({BaseNetworkState? state}) 
+      : networkState = state ?? BaseNetworkState();
 
   /// 要请求的 api 接口 子类重写实现（用于不带参数的请求）
   late final Future<BaseResponse<T>> Function()? apiRequest = null;

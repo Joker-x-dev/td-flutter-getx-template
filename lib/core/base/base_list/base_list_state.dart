@@ -6,9 +6,6 @@ import '../base_network/base_network_state.dart';
 /// 列表状态管理类
 class BaseListState<T> extends BaseNetworkState {
   @override
-  bool get firstLoad => true;
-
-  @override
   bool get requestSetStatus => false;
 
   /// 刷新控制器

@@ -53,9 +53,9 @@ class CommonUtil {
     bool dialog = false,
     String? msg,
   }) {
-    if (isNull(response) || response.code != 200) {
-      if (toast) ToastUtil.error(msg ?? response.msg ?? '加载失败');
-      if (dialog) AlertUtil.showFeedbackDialog(msg ?? response.msg ?? '加载失败');
+    if (isNull(response) || response.code != 1000) {
+      if (toast) ToastUtil.error(msg ?? response.message ?? '加载失败');
+      if (dialog) AlertUtil.showFeedbackDialog(msg ?? response.message ?? '加载失败');
       // 不成功
       return false;
     }

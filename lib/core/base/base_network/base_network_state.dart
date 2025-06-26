@@ -6,13 +6,13 @@ class BaseNetworkState {
   var uiState = NetState.loading.obs;
 
   /// 请求失败以后是否显示toast
-  bool requestErrorToast = true;
+  final bool requestErrorToast = true;
 
   /// 是否进入页面就进行加载
-  bool firstLoad = true;
+  final bool firstLoad = true;
 
   /// 每次加载前是否设置为加载状态 一般配合base_list使用
-  bool requestSetStatus = true;
+  final bool requestSetStatus = true;
 }
 
 enum NetState {

@@ -5,12 +5,18 @@ import '../../model/response/base/base_list_response.dart';
 import '../../model/response/base/base_response.dart';
 import '../../util/common/common_util.dart';
 import '../base_network/base_network_logic.dart';
+import '../base_network/base_network_state.dart';
 import 'base_list_state.dart';
 
 /// 列表base类 主要是对列表进行封装
 abstract class BaseListLogic<T> extends BaseNetworkLogic<BaseListResponse<T>> {
   /// 列表状态
-  final BaseListState<T> listState = BaseListState<T>();
+  late final BaseListState<T> listState;
+
+  /// 构造函数，确保只创建一个实例
+  BaseListLogic() : super(state: BaseListState<T>()) {
+    listState = networkState as BaseListState<T>;
+  }
 
   /// 重写 apiRequest，让其返回 Future<BaseResponse<BaseListResponse<T>>>
   @override
@@ -18,7 +24,7 @@ abstract class BaseListLogic<T> extends BaseNetworkLogic<BaseListResponse<T>> {
 
   @override
   void requestOk(BaseListResponse<T>? data) {
-    final record = data?.records ?? [];
+    final record = data?.list ?? [];
     if (CommonUtil.isNull(record)) {
       return updateListPageStatusEmpty();
     }
@@ -33,7 +39,9 @@ abstract class BaseListLogic<T> extends BaseNetworkLogic<BaseListResponse<T>> {
     // 数据处理方法，让子类有机会修改数据
     processDataList(listState.dataList);
     // 如果已经到了最后一页，也设置 noMoreData 为 true
-    if (listState.currentPage == data!.pages! || data.pages! == 0) {
+    final totalPages =
+        (data!.pagination!.total! / data.pagination!.size!).ceil();
+    if (listState.currentPage >= totalPages || totalPages == 0) {
       listState.noMoreData = true;
       setRefreshStatusNoMore();
     } else {

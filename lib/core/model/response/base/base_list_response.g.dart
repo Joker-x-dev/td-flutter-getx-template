@@ -10,20 +10,29 @@ BaseListResponse<T> _$BaseListResponseFromJson<T>(
   Map<String, dynamic> json,
   T Function(Object? json) fromJsonT,
 ) => BaseListResponse<T>(
-  records: (json['records'] as List<dynamic>?)?.map(fromJsonT).toList(),
-  total: (json['total'] as num?)?.toInt(),
-  size: (json['size'] as num?)?.toInt(),
-  current: (json['current'] as num?)?.toInt(),
-  pages: (json['pages'] as num?)?.toInt(),
+  list: (json['list'] as List<dynamic>?)?.map(fromJsonT).toList(),
+  pagination:
+      json['pagination'] == null
+          ? null
+          : PageMeta.fromJson(json['pagination'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$BaseListResponseToJson<T>(
   BaseListResponse<T> instance,
   Object? Function(T value) toJsonT,
 ) => <String, dynamic>{
-  'records': instance.records?.map(toJsonT).toList(),
+  'list': instance.list?.map(toJsonT).toList(),
+  'pagination': instance.pagination,
+};
+
+PageMeta _$PageMetaFromJson(Map<String, dynamic> json) => PageMeta(
+  total: (json['total'] as num?)?.toInt(),
+  size: (json['size'] as num?)?.toInt(),
+  page: (json['page'] as num?)?.toInt(),
+);
+
+Map<String, dynamic> _$PageMetaToJson(PageMeta instance) => <String, dynamic>{
   'total': instance.total,
   'size': instance.size,
-  'current': instance.current,
-  'pages': instance.pages,
+  'page': instance.page,
 };

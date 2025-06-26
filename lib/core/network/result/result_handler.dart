@@ -92,7 +92,7 @@ class ApiHandler {
       )) {
         onSuccess?.call(response.data);
       } else {
-        final message = errorMsg ?? response.msg ?? "未知错误";
+        final message = errorMsg ?? response.message ?? "未知错误";
         onError?.call(message, null);
       }
     } catch (e, stackTrace) {
@@ -102,7 +102,7 @@ class ApiHandler {
 
       if (showErrorToast || showErrorDialog) {
         CommonUtil.isError(
-          BaseResponse(code: -1, msg: formattedError),
+          BaseResponse(code: -1, message: formattedError),
           toast: showErrorToast,
           dialog: showErrorDialog,
           msg: errorMsg,
