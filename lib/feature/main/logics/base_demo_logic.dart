@@ -37,7 +37,7 @@ class BaseDemoLogic extends BaseLogic {
       ),
       DemoItem(
         title: 'BaseRefresh 示例',
-        description: '展示下拉刷新页面的使用，包含下拉刷新、上拉加载、刷新状态等功能',
+        description: '展示下拉刷新页面的使用，包含下拉刷新、失败重试等功能',
         icon: TDIcons.refresh,
         onTap: _onBaseRefreshViewTap,
       ),

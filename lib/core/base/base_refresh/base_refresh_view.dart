@@ -7,13 +7,7 @@ import 'base_refresh_logic.dart';
 
 abstract class BaseRefreshView<T extends BaseRefreshLogic>
     extends BaseNetworkView<T> {
-  BaseRefreshView({super.key});
-
-  /// 默认内边距的值 子类可重写
-  final EdgeInsetsGeometry defaultPadding = listItemPadding;
-
-  /// 是否有内边距 默认都会有内边距 子类可重写
-  final bool padding = true;
+  const BaseRefreshView({super.key});
 
   /// 子类重写此方法传递视图内容
   List<Widget> pageContent(T controller);
@@ -34,7 +28,7 @@ abstract class BaseRefreshView<T extends BaseRefreshLogic>
         dragText: '拉动刷新',
       ),
       child: ListView(
-        padding: padding ? defaultPadding : null,
+        padding: listItemPadding,
         children: pageContent(controller),
       ),
     );

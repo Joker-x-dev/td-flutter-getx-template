@@ -22,5 +22,5 @@ abstract class GoodsApi {
 
   /// 商品信息
   @GET('/info')
-  Future<BaseResponse<Goods>> getGoodsInfo(@Query('id') Id id);
+  Future<BaseResponse<Goods>> getGoodsInfo(@Query('id') int id);
 }

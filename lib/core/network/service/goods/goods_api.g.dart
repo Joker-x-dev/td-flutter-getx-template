@@ -56,9 +56,9 @@ class _GoodsApi implements GoodsApi {
   }
 
   @override
-  Future<BaseResponse<Goods>> getGoodsInfo(Id id) async {
+  Future<BaseResponse<Goods>> getGoodsInfo(int id) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'id': id.toJson()};
+    final queryParameters = <String, dynamic>{r'id': id};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<BaseResponse<Goods>>(
