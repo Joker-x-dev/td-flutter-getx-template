@@ -23,12 +23,14 @@ class UtilsDemoView extends BaseView<UtilsDemoLogic> {
   @override
   Widget body() {
     return controller.utilsDemoState.utilsDemoItems
-        .map((item) => DemoCard(
-              title: item.title,
-              description: item.description,
-              icon: item.icon,
-              onTap: item.onTap,
-            ))
+        .map(
+          (item) => DemoCard(
+            title: item.title,
+            description: item.description,
+            icon: item.icon,
+            onTap: item.onTap,
+          ),
+        )
         .toList()
         .toColumnCenter(spacing: spaceVerticalMedium)
         .scrollable(
@@ -36,4 +38,4 @@ class UtilsDemoView extends BaseView<UtilsDemoLogic> {
           padding: pagePadding,
         );
   }
-} 
+}

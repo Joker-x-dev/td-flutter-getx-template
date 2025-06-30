@@ -23,12 +23,14 @@ class NetworkDemoView extends BaseView<NetworkDemoLogic> {
   @override
   Widget body() {
     return controller.networkDemoState.networkDemoItems
-        .map((item) => DemoCard(
-              title: item.title,
-              description: item.description,
-              icon: item.icon,
-              onTap: item.onTap,
-            ))
+        .map(
+          (item) => DemoCard(
+            title: item.title,
+            description: item.description,
+            icon: item.icon,
+            onTap: item.onTap,
+          ),
+        )
         .toList()
         .toColumnCenter(spacing: spaceVerticalMedium)
         .scrollable(
@@ -36,4 +38,4 @@ class NetworkDemoView extends BaseView<NetworkDemoLogic> {
           padding: pagePadding,
         );
   }
-} 
+}

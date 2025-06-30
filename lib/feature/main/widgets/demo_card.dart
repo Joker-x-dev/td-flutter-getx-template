@@ -15,15 +15,19 @@ import '../../../core/design_system/theme/type.dart';
 class DemoCard extends StatelessWidget {
   /// 标题
   final String title;
-  
+
   /// 描述
   final String description;
-  
+
   /// 图标
   final IconData icon;
-  
+
   /// 点击回调
   final VoidCallback onTap;
+
+  /// 右侧内容组件，可选
+  /// 如果不传入，则使用默认的箭头图标
+  final Widget? trailing;
 
   const DemoCard({
     super.key,
@@ -31,6 +35,7 @@ class DemoCard extends StatelessWidget {
     required this.description,
     required this.icon,
     required this.onTap,
+    this.trailing,
   });
 
   @override
@@ -62,8 +67,9 @@ class DemoCard extends StatelessWidget {
             ),
           ].toColumnStart(spacing: spaceVerticalXSmall).expanded(),
 
-          // 右侧箭头
-          Icon(TDIcons.chevron_right, color: textPlaceholder, size: 20),
+          // 右侧内容（可自定义）
+          trailing ??
+              Icon(TDIcons.chevron_right, color: textPlaceholder, size: 20),
         ]
         .toRowCenter(spacing: spaceHorizontalMedium)
         .padding(all: spacePaddingLarge)
@@ -72,4 +78,4 @@ class DemoCard extends StatelessWidget {
         .clipRRect(all: radiusExtraLarge)
         .tapScale(onTap: onTap);
   }
-} 
+}

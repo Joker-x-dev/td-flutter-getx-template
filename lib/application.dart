@@ -9,8 +9,8 @@ import 'package:tdesign_flutter/tdesign_flutter.dart';
 import 'core/util/storage/storage_util.dart';
 
 class Application {
-  /// 主题
-  static late TDThemeData themeData;
+  /// 主题 - 使用响应式变量
+  static final Rx<TDThemeData> themeData = TDThemeData.defaultData().obs;
 
   /// Alice 网络请求调试工具
   static late Alice alice;
@@ -55,7 +55,12 @@ class Application {
     // 主题配置
     TDTheme.needMultiTheme();
     var jsonString = await rootBundle.loadString(JsonRes.theme);
-    themeData = TDThemeData.fromJson('theme', jsonString)!;
+    themeData.value = TDThemeData.fromJson('theme', jsonString)!;
+  }
+
+  /// 更新主题
+  static void updateTheme(TDThemeData newTheme) {
+    themeData.value = newTheme;
   }
 
   /// 初始化 Alice

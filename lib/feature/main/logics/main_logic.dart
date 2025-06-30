@@ -4,6 +4,7 @@ import 'package:td_flutter_getx_template/core/base/base/base_logic.dart';
 import '../states/main_state.dart';
 import '../views/base_demo_view.dart';
 import '../views/network_demo_view.dart';
+import '../views/theme_demo_view.dart';
 import '../views/utils_demo_view.dart';
 
 class MainLogic extends BaseLogic {
@@ -14,6 +15,7 @@ class MainLogic extends BaseLogic {
     const BaseDemoView(),
     const NetworkDemoView(),
     const UtilsDemoView(),
+    const ThemeDemoView(),
   ];
 
   @override
@@ -23,7 +25,9 @@ class MainLogic extends BaseLogic {
   }
 
   init() {
-    mainState.pageController = PageController(initialPage: mainState.pageIndex.value);
+    mainState.pageController = PageController(
+      initialPage: mainState.pageIndex.value,
+    );
   }
 
   /// 底部导航栏点击

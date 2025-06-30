@@ -34,6 +34,7 @@ class MainView extends BaseView<MainLogic> {
           tabItem('基类', TDIcons.layers, TDIcons.layers_filled, 0),
           tabItem('网络', TDIcons.internet, TDIcons.internet_filled, 1),
           tabItem('工具', TDIcons.tools, TDIcons.tools_filled, 2),
+          tabItem('主题', TDIcons.palette, TDIcons.palette_filled, 3),
         ],
       ),
     );

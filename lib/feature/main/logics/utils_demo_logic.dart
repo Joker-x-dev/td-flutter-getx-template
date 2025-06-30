@@ -65,8 +65,6 @@ class UtilsDemoLogic extends BaseLogic {
     // TODO: 展示存储工具功能
   }
 
-
-
   /// 屏幕适配工具点击
   void _onSizeUtilTap() {
     // TODO: 展示屏幕适配功能
