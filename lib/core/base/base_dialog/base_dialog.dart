@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:styled_widget/styled_widget.dart';
+import 'package:td_flutter_getx_template/core/design_system/theme/size.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
 
 import '../../util/common/common_util.dart';
@@ -26,6 +27,27 @@ abstract class BaseDialog extends StatelessWidget {
 
   /// 是否允许通过物理返回按钮关闭（Android）
   bool get enablePhysicalBack => true;
+
+  /// 顶部导航栏内容 子类可根据需求重写
+  Widget? head() {
+    return TDNavBar(
+      title: title,
+      screenAdaptation: false,
+      useDefaultBack: false,
+      height: 56,
+      belowTitleWidget: const TDDivider(),
+      rightBarItems: close
+          ? [
+              TDNavBarItem(
+                iconWidget: Icon(Icons.close, size: 28)
+                    .ripple()
+                    .clipRRect(all: 4)
+                    .gestures(onTap: () => CommonUtil.closePop()),
+              ),
+            ]
+          : null,
+    );
+  }
 
   /// 设置主视图内容 (子类必须实现)
   List<Widget> body();
@@ -59,51 +81,30 @@ abstract class BaseDialog extends StatelessWidget {
     // 初始化弹窗
     init();
 
-    // 获取屏幕高度和状态栏高度
-    final screenHeight = SizeUtil.getScreenHeight();
-    final statusBarHeight = SizeUtil.getStatusBarHeight();
-    final safeAreaHeight = SizeUtil.getSafeBarHeight();
-    final isIos = CommonUtil.isIos();
+    // 使用MediaQuery获取准确的屏幕和安全区域信息
+    final mediaQuery = MediaQuery.of(context);
+    final screenHeight = mediaQuery.size.height;
+    final topPadding = mediaQuery.padding.top; // 顶部安全区域（包括胶囊/刘海/状态栏）
+    final bottomPadding = SizeUtil.getSafeBarHeight(); // 底部安全区域
 
-    // 设定弹窗最大高度为屏幕高度的某个比例，减去状态栏和底部安全区域的高度
-    final maxHeight = screenHeight - statusBarHeight - safeAreaHeight;
+    // 预留顶部和底部的安全边距
+    final topMargin = spaceVerticalLarge; // 顶部额外边距
+    final bottomMargin = spaceVerticalLarge; // 底部额外边距
 
-    Widget dialogContent = [
-          TDNavBar(
-            title: title,
-            screenAdaptation: false,
-            useDefaultBack: false,
-            height: 56,
-            belowTitleWidget: const TDDivider(),
-            rightBarItems:
-                close
-                    ? [
-                      TDNavBarItem(
-                        iconWidget: Icon(
-                              Icons.close,
-                              size: 28,
-                              // color: ConstantTheme.grayOpacity4,
-                            )
-                            .ripple()
-                            .clipRRect(all: 4)
-                            .gestures(
-                              onTap: () => Navigator.of(Get.context!).pop(),
-                            ),
-                      ),
-                    ]
-                    : null,
-          ),
-          body()
-              .toColumn(
-                // crossAxisAlignment: Constant.crossStart,
-                // mainAxisAlignment: Constant.mainStart,
-              )
-              .padding(all: 16),
-          if (CommonUtil.isNotNull(bottom()))
-            bottom()!.padding(bottom: SizeUtil.getSafeBarHeight()),
-        ]
-        .toColumn(mainAxisSize: MainAxisSize.min)
-        .constrained(maxHeight: isIos ? 70.00 + maxHeight : maxHeight);
+    // 计算弹窗可用的最大高度
+    // 屏幕高度 - 顶部安全区域 - 底部安全区域 - 额外边距
+    final maxHeight =
+        screenHeight - topPadding - bottomPadding - topMargin - bottomMargin;
+
+    Widget dialogContent =
+        [
+              if (CommonUtil.isNotNull(head())) head()!,
+              body().toColumn().scrollable(padding: pagePadding).flexible(),
+              if (CommonUtil.isNotNull(bottom()))
+                bottom()!.padding(bottom: bottomPadding),
+            ]
+            .toColumn(mainAxisSize: MainAxisSize.min)
+            .constrained(maxHeight: maxHeight);
 
     // 使用PopScope包装对话框内容，控制物理返回键行为
     return PopScope(canPop: enablePhysicalBack, child: dialogContent);
