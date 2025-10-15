@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:styled_widget/styled_widget.dart';
+import 'package:td_flutter_getx_template/core/design_system/extensions/extensions.dart';
 import 'package:td_flutter_getx_template/core/base/base_tab/base_tab_view.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
 

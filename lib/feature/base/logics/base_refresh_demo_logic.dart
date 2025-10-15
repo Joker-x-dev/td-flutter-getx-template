@@ -10,7 +10,7 @@ class BaseRefreshDemoLogic extends BaseRefreshLogic<Goods> {
 
   @override
   Future<BaseResponse<Goods>> Function()? get apiRequest => () {
-    return ApiService.goodsApi().getGoodsInfo(1);
+    return ApiService.goods.getGoodsInfo(1);
   };
 
   @override

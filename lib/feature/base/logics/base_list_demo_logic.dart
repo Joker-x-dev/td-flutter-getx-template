@@ -12,10 +12,10 @@ class BaseListDemoLogic extends BaseListLogic<Goods> {
 
   @override
   Future<BaseResponse<BaseListResponse<Goods>>> Function()? get apiRequest =>
-      () => ApiService.goodsApi().getGoodsPage(
+      () => ApiService.goods.getGoodsPage(
         GoodsSearchRequest(
-          page: baseListDemoState.currentPage,
-          size: baseListDemoState.pageSize,
+          page: listState.currentPage,
+          size: listState.pageSize,
         ),
       );
 }

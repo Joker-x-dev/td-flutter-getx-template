@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:styled_widget/styled_widget.dart';
+import 'package:td_flutter_getx_template/core/design_system/extensions/extensions.dart';
 import 'package:td_flutter_getx_template/core/design_system/theme/size.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
 
@@ -41,7 +41,7 @@ abstract class BaseDialog extends StatelessWidget {
               TDNavBarItem(
                 iconWidget: Icon(Icons.close, size: 28)
                     .ripple()
-                    .clipRRect(all: 4)
+                    .clipRadius(4)
                     .gestures(onTap: () => CommonUtil.closePop()),
               ),
             ]
@@ -101,7 +101,7 @@ abstract class BaseDialog extends StatelessWidget {
               if (CommonUtil.isNotNull(head())) head()!,
               body().toColumn().scrollable(padding: pagePadding).flexible(),
               if (CommonUtil.isNotNull(bottom()))
-                bottom()!.padding(bottom: bottomPadding),
+                bottom()!.pad(bottom: bottomPadding),
             ]
             .toColumn(mainAxisSize: MainAxisSize.min)
             .constrained(maxHeight: maxHeight);

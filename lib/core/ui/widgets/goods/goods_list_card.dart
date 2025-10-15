@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:styled_widget/styled_widget.dart';
-import 'package:td_flutter_getx_template/core/design_system/widgets/column.dart';
-import 'package:td_flutter_getx_template/core/design_system/widgets/row.dart';
-import 'package:td_flutter_getx_template/core/extensions/interaction_extensions.dart';
+import 'package:td_flutter_getx_template/core/design_system/extensions/extensions.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
 
 import '../../../design_system/theme/color.dart';
@@ -31,11 +28,10 @@ class GoodsListCard extends StatelessWidget {
           _buildProductInfo().expanded(),
         ]
         .toRowTop()
-        .padding(all: spacePaddingLarge)
-        .ripple()
+        .padAll(spacePaddingLarge)
         .backgroundColor(backgroundContainer)
-        .clipRRect(all: radiusLarge)
-        .tapScale(onTap: onTap);
+        .clipRadius(radiusLarge)
+        .animatedTap(onTap);
   }
 
   /// 构建商品图片

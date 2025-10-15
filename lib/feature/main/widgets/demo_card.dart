@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:styled_widget/styled_widget.dart';
-import 'package:td_flutter_getx_template/core/design_system/widgets/column.dart';
-import 'package:td_flutter_getx_template/core/design_system/widgets/row.dart';
-import 'package:td_flutter_getx_template/core/extensions/interaction_extensions.dart';
+import 'package:td_flutter_getx_template/core/design_system/extensions/extensions.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
 
 import '../../../core/design_system/theme/color.dart';
@@ -43,9 +40,9 @@ class DemoCard extends StatelessWidget {
     return [
           // 左侧图标
           Icon(icon, color: primary, size: 24)
-              .constrained(height: 48, width: 48)
+              .tight(height: 48, width: 48)
               .backgroundColor(primary.withValues(alpha: 0.1))
-              .clipRRect(all: radiusDefault),
+              .clipRadius(radiusDefault),
 
           // 中间内容区域
           [
@@ -72,10 +69,9 @@ class DemoCard extends StatelessWidget {
               Icon(TDIcons.chevron_right, color: textPlaceholder, size: 20),
         ]
         .toRowCenter(spacing: spaceHorizontalMedium)
-        .padding(all: spacePaddingLarge)
-        .ripple()
+        .padAll(spacePaddingLarge)
+        .animatedTapScale(onTap)
         .backgroundColor(backgroundContainer)
-        .clipRRect(all: radiusExtraLarge)
-        .tapScale(onTap: onTap);
+        .clipRadius(radiusExtraLarge);
   }
 }

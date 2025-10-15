@@ -10,11 +10,11 @@ class ApiService {
   static final Dio _dio = NetworkModel.getInstance();
 
   /// 认证相关 API
-  static AuthApi authApi() => AuthApi(_dio);
+  static AuthApi get auth => AuthApi(_dio);
 
   /// 用户相关 API
-  static UserApi userApi() => UserApi(_dio);
+  static UserApi get user => UserApi(_dio);
 
   /// 商品相关 API
-  static GoodsApi goodsApi() => GoodsApi(_dio);
+  static GoodsApi get goods => GoodsApi(_dio);
 }

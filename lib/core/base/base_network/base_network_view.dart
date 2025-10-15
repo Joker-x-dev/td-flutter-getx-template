@@ -2,7 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:styled_widget/styled_widget.dart';
+import 'package:td_flutter_getx_template/core/design_system/extensions/extensions.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
 
 import '../../../res/icon_res.dart';
@@ -41,18 +41,19 @@ abstract class BaseNetworkView<T extends BaseNetworkLogic> extends BaseView<T> {
 
       // 使用 PageTransitionSwitcher 包裹状态切换
       return PageTransitionSwitcher(
-        transitionBuilder: (
-          Widget child,
-          Animation<double> animation,
-          Animation<double> secondaryAnimation,
-        ) {
-          return FadeThroughTransition(
-            animation: animation,
-            secondaryAnimation: secondaryAnimation,
-            fillColor: Colors.transparent,
-            child: child,
-          );
-        },
+        transitionBuilder:
+            (
+              Widget child,
+              Animation<double> animation,
+              Animation<double> secondaryAnimation,
+            ) {
+              return FadeThroughTransition(
+                animation: animation,
+                secondaryAnimation: secondaryAnimation,
+                fillColor: Colors.transparent,
+                child: child,
+              );
+            },
         child: child,
       );
     });
@@ -92,7 +93,7 @@ abstract class BaseNetworkView<T extends BaseNetworkLogic> extends BaseView<T> {
       operationText: '重新加载',
       type: TDEmptyType.operation,
       emptyText: emptyText,
-      image: SvgPicture.asset(imgPath).constrained(height: 220, width: 200),
+      image: SvgPicture.asset(imgPath).tight(height: 220, width: 200),
     );
   }
 

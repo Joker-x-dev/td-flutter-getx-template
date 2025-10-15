@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:td_flutter_getx_template/core/design_system/extensions/extensions.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
-
-import '../../design_system/widgets/keep_alive_wrapper.dart';
 
 abstract class BaseView<T> extends GetView<T> {
   const BaseView({super.key});
@@ -44,12 +43,11 @@ abstract class BaseView<T> extends GetView<T> {
   PreferredSizeWidget? head() {
     if (isHiddenNav) return null;
     return TDNavBar(
-      leftBarItems:
-          navBackBtn
-              ? useDefaultBack
-                  ? [TDNavBarItem(iconWidget: const BackButton())]
-                  : null
-              : null,
+      leftBarItems: navBackBtn
+          ? useDefaultBack
+                ? [TDNavBarItem(iconWidget: const BackButton())]
+                : null
+          : null,
       padding: EdgeInsets.zero,
       title: navTitle,
       height: navHeight,
@@ -75,7 +73,7 @@ abstract class BaseView<T> extends GetView<T> {
       resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       backgroundColor: backgroundColor,
       appBar: head(),
-      body: keepAlive ? KeepAliveWrapper(child: body()) : body(),
+      body: keepAlive ? body().keepAlive() : body(),
       bottomNavigationBar: bottom(),
       floatingActionButton: floatingAction(),
     );

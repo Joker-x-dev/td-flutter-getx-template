@@ -79,7 +79,7 @@ Color get backgroundComponent => TDTheme.of(_context).grayColor3;
 ### 使用方式
 ```dart
 import 'package:flutter/material.dart';
-import 'package:styled_widget/styled_widget.dart';
+import 'package:td_flutter_getx_template/core/design_system/extensions/extensions.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
 import 'package:your_app/core/design_system/theme/color.dart';
 
@@ -214,7 +214,7 @@ EdgeInsets get listItemPadding => EdgeInsets.symmetric(
 ### 使用方式
 ```dart
 import 'package:flutter/material.dart';
-import 'package:styled_widget/styled_widget.dart';
+import 'package:td_flutter_getx_template/core/design_system/extensions/extensions.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
 import 'package:your_app/core/design_system/theme/size.dart';
 
@@ -270,7 +270,7 @@ RoundedRectangleBorder get circleShape =>
 ### 使用方式
 ```dart
 import 'package:flutter/material.dart';
-import 'package:styled_widget/styled_widget.dart';
+import 'package:td_flutter_getx_template/core/design_system/extensions/extensions.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
 import 'package:your_app/core/design_system/theme/shape.dart';
 
@@ -278,7 +278,7 @@ import 'package:your_app/core/design_system/theme/shape.dart';
 TDText("圆角容器")
   .padding(all: spacePaddingMedium)
   .backgroundColor(backgroundContainer)
-  .clipRRect(all: radiusDefault)
+  .clipRadius( radiusDefault)
 
 // 使用形状对象 - 使用 styled_widget 的 card 方法
 TDText("圆角卡片")
@@ -326,7 +326,7 @@ BoxDecoration get popupShadow => BoxDecoration(
 ### 使用方式
 ```dart
 import 'package:flutter/material.dart';
-import 'package:styled_widget/styled_widget.dart';
+import 'package:td_flutter_getx_template/core/design_system/extensions/extensions.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
 import 'package:your_app/core/design_system/theme/shadows.dart';
 
@@ -334,14 +334,14 @@ import 'package:your_app/core/design_system/theme/shadows.dart';
 TDText("带阴影的卡片")
   .padding(all: spacePaddingMedium)
   .backgroundColor(backgroundContainer)
-  .clipRRect(all: radiusDefault)
+  .clipRadius( radiusDefault)
   .boxShadow(shadowBase)
 
 // 使用 styled_widget 的 elevation 方法
 TDText("带海拔的卡片")
   .padding(all: spacePaddingMedium)
   .backgroundColor(backgroundContainer)
-  .clipRRect(all: radiusDefault)
+  .clipRadius( radiusDefault)
   .elevation(
     2,
     borderRadius: BorderRadius.circular(radiusDefault),
@@ -563,7 +563,7 @@ import 'package:your_app/core/design_system/widgets/space.dart';
 ### 商品卡片示例
 ```dart
 import 'package:flutter/material.dart';
-import 'package:styled_widget/styled_widget.dart';
+import 'package:td_flutter_getx_template/core/design_system/extensions/extensions.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
 import 'package:your_app/core/design_system/theme/color.dart';
 import 'package:your_app/core/design_system/theme/shape.dart';
@@ -593,7 +593,7 @@ class ProductCard extends StatelessWidget {
         imageUrl,
         fit: BoxFit.cover,
         height: 120,
-      ).clipRRect(all: radiusSmall),
+      ).clipRadius( radiusSmall),
       
       const SpaceVerticalMedium(),
       
@@ -627,7 +627,7 @@ class ProductCard extends StatelessWidget {
     .toColumnStart()
     .padding(all: spacePaddingMedium)
     .backgroundColor(backgroundContainer)
-    .clipRRect(all: radiusDefault)
+    .clipRadius( radiusDefault)
     .elevation(
       2,
       borderRadius: BorderRadius.circular(radiusDefault),
@@ -640,7 +640,7 @@ class ProductCard extends StatelessWidget {
 ### 用户信息卡片示例
 ```dart
 import 'package:flutter/material.dart';
-import 'package:styled_widget/styled_widget.dart';
+import 'package:td_flutter_getx_template/core/design_system/extensions/extensions.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
 import 'package:your_app/core/design_system/theme/color.dart';
 import 'package:your_app/core/design_system/theme/shape.dart';
@@ -699,7 +699,7 @@ class UserInfoCard extends StatelessWidget {
     .toRowCenter()
     .padding(all: spacePaddingLarge)
     .backgroundColor(backgroundContainer)
-    .clipRRect(all: radiusLarge)
+    .clipRadius( radiusLarge)
     .elevation(
       2,
       borderRadius: BorderRadius.circular(radiusLarge),
@@ -786,7 +786,7 @@ TDText(
 )
   .padding(all: spacePaddingMedium)
   .backgroundColor(backgroundContainer)
-  .clipRRect(all: radiusDefault)
+  .clipRadius( radiusDefault)
   .gestures(onTap: () => print("点击"))
 ```
 

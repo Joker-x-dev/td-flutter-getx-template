@@ -132,7 +132,7 @@ flutter run --release
 
 ```bash
 # 生成 APK
-flutter build apk --release --obfuscate --split-debug-info=./debug_info
+flutter build apk --release --obfuscate --split-debug-info=./debug_info --target-platform android-arm64 
 ```
 
 ```bash

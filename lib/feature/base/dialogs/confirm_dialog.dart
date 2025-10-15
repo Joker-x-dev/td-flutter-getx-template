@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:styled_widget/styled_widget.dart';
+import 'package:td_flutter_getx_template/core/design_system/extensions/extensions.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
 
 import '../../../core/base/base_dialog/base_dialog.dart';
 import '../../../core/design_system/theme/color.dart';
 import '../../../core/design_system/theme/type.dart';
-import '../../../core/design_system/widgets/row.dart';
+
 import '../../../core/util/common/common_util.dart';
 
 /// 确认对话框示例
@@ -70,6 +70,6 @@ class ConfirmDialog extends BaseDialog {
           onConfirm?.call();
         },
       ).expanded(),
-    ].toRowCenter().padding(horizontal: 16);
+    ].toRowCenter().padHorizontal(16);
   }
 }

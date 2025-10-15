@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
-import 'package:styled_widget/styled_widget.dart';
 import 'package:td_flutter_getx_template/core/base/base_refresh/base_refresh_view.dart';
-import 'package:td_flutter_getx_template/core/design_system/widgets/column.dart';
-import 'package:td_flutter_getx_template/core/design_system/widgets/row.dart';
+import 'package:td_flutter_getx_template/core/design_system/extensions/extensions.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
 
 import '../../../core/design_system/theme/color.dart';
@@ -37,7 +35,7 @@ class BaseRefreshDemoView extends BaseRefreshView<BaseRefreshDemoLogic> {
         itemBuilder: (BuildContext context, int index) {
           return TDImage(imgUrl: goods.pics![index], fit: BoxFit.cover);
         },
-      ).height(340).clipRRect(all: radiusExtraLarge),
+      ).height(340).clipRadius(radiusExtraLarge),
 
       const SpaceVerticalLarge(),
 
@@ -83,9 +81,9 @@ class BaseRefreshDemoView extends BaseRefreshView<BaseRefreshDemoLogic> {
             ].toRowBetween(crossAxisAlignment: CrossAxisAlignment.end),
           ]
           .toColumnStart()
-          .padding(all: spacePaddingLarge)
+          .padAll(spacePaddingLarge)
           .backgroundColor(backgroundContainer)
-          .clipRRect(all: radiusExtraLarge),
+          .clipRadius(radiusExtraLarge),
 
       const SpaceVerticalLarge(),
 
@@ -97,10 +95,7 @@ class BaseRefreshDemoView extends BaseRefreshView<BaseRefreshDemoLogic> {
               font: fontTitleMedium,
               textColor: textPrimary,
               fontWeight: fontWeightBold,
-            ).padding(
-              horizontal: spacePaddingLarge,
-              vertical: spacePaddingMedium,
-            ),
+            ).pad(horizontal: spacePaddingLarge, vertical: spacePaddingMedium),
 
             // 详情图片列表
             ...goods.contentPics!.map(
@@ -113,7 +108,7 @@ class BaseRefreshDemoView extends BaseRefreshView<BaseRefreshDemoLogic> {
           ]
           .toColumnStart()
           .backgroundColor(backgroundContainer)
-          .clipRRect(all: radiusExtraLarge),
+          .clipRadius(radiusExtraLarge),
     ];
   }
 }

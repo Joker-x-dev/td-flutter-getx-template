@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:styled_widget/styled_widget.dart';
+import 'package:td_flutter_getx_template/core/design_system/extensions/extensions.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
 
 import '../../../core/base/base/base_view.dart';
@@ -7,7 +7,6 @@ import '../../../core/design_system/theme/color.dart';
 import '../../../core/design_system/theme/shape.dart';
 import '../../../core/design_system/theme/size.dart';
 import '../../../core/design_system/theme/type.dart';
-import '../../../core/design_system/widgets/column.dart';
 import '../../../core/design_system/widgets/space.dart';
 import '../logics/theme_demo_logic.dart';
 import '../widgets/demo_card.dart';
@@ -82,7 +81,7 @@ class ThemeDemoView extends BaseView<ThemeDemoLogic> {
           ),
         ]
         .toColumnStart()
-        .padding(all: spacePaddingLarge)
+        .padAll(spacePaddingLarge)
         .decorated(
           color: primary.withValues(alpha: 0.1),
           border: Border.all(color: primary.withValues(alpha: 0.2)),
@@ -115,9 +114,9 @@ class ThemeDemoView extends BaseView<ThemeDemoLogic> {
           ),
         ]
         .toColumnCenter()
-        .padding(all: spacePaddingLarge)
+        .padAll(spacePaddingLarge)
         .backgroundColor(backgroundContainer)
-        .clipRRect(all: radiusExtraLarge);
+        .clipRadius(radiusExtraLarge);
   }
 
   /// 根据主题索引构建对应颜色的圆圈

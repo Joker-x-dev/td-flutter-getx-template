@@ -1,7 +1,7 @@
 import 'package:td_flutter_getx_template/core/base/base/base_logic.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
 
-import '../../../routes/route_manager.dart';
+import '../../../routes/base/base_navigator.dart';
 import '../models/demo_item.dart';
 import '../states/base_demo_state.dart';
 
@@ -58,31 +58,31 @@ class BaseDemoLogic extends BaseLogic {
 
   /// BaseView 示例点击
   void _onBaseViewTap() {
-    toBaseDemoPage();
+    BaseNavigator.toDemo();
   }
 
   /// BaseListView 示例点击
   void _onBaseListViewTap() {
-    toBaseListDemoPage();
+    BaseNavigator.toListDemo();
   }
 
   /// BaseNetworkView 示例点击
   void _onBaseNetworkViewTap() {
-    toBaseNetworkDemoPage();
+    BaseNavigator.toNetworkDemo();
   }
 
   /// BaseRefreshView 示例点击
   void _onBaseRefreshViewTap() {
-    toBaseRefreshDemoPage();
+    BaseNavigator.toRefreshDemo();
   }
 
   /// BaseTabView 示例点击
   void _onBaseTabViewTap() {
-    toBaseTabDemoPage();
+    BaseNavigator.toTabDemo();
   }
 
   /// BaseDialog 示例点击
   void _onBaseDialogTap() {
-    toBaseDialogDemoPage();
+    BaseNavigator.toDialogDemo();
   }
 }

@@ -15,25 +15,22 @@ dependencies:
   get: ^4.7.2
 
   # Tencent Design Flutter 组件库 https://pub.dev/packages/tdesign_flutter
-  tdesign_flutter: ^0.2.2
+  tdesign_flutter: ^0.2.5
 
   # 屏幕适配工具 https://pub.dev/packages/flutter_screenutil
   flutter_screenutil: ^5.9.3
 
-  # Widget 样式化工具 https://pub.dev/packages/styled_widget
-  styled_widget: ^0.4.1
-
   # 网络请求库 https://pub.dev/packages/dio
-  dio: ^5.8.0+1
+  dio: ^5.9.0
 
   # JSON 序列化工具类库 https://pub.dev/packages/json_annotation
   json_annotation: ^4.9.0
 
   # Retrofit 网络请求库 https://pub.dev/packages/retrofit
-  retrofit: ^4.4.2
+  retrofit: ^4.7.3
 
   # svg框架 https://pub.dev/packages/flutter_svg
-  flutter_svg: ^2.1.0
+  flutter_svg: ^2.2.1
 
   # 持久化存储库 https://pub.dev/packages/shared_preferences
   shared_preferences: ^2.5.3
@@ -42,7 +39,7 @@ dependencies:
   easy_refresh: ^3.4.0
 
   # 页面动画 https://pub.dev/packages/animations
-  animations: ^2.0.11
+  animations: ^2.1.0
 
   # 加载弹窗 和 Toast https://pub.dev/packages/bot_toast
   bot_toast: ^4.1.3
@@ -52,27 +49,27 @@ dev_dependencies:
     sdk: flutter
 
   # Flutter 代码风格检查 https://pub.dev/packages/flutter_lints
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
 
-  # 网络请求通知栏拦截器 https://pub.dev/packages/alice/versions/1.0.0-dev.12
+  # 网络请求通知栏拦截器 https://pub.dev/packages/alice
   # 文档 https://jhomlala.github.io/alice/#/README
-  alice: ^1.0.0-dev.12
-  alice_dio: ^1.0.6
+  alice: ^1.0.0
+  alice_dio: ^1.0.7
 
   # JSON 序列化工具 https://pub.dev/packages/json_serializable
-  json_serializable: ^6.9.5
+  json_serializable: ^6.11.1
 
   # Retrofit 代码生成库 https://pub.dev/packages/retrofit_generator
-  retrofit_generator: ^9.1.9
+  retrofit_generator: ^10.0.6
 
   # 构建工具 https://pub.dev/packages/build_runner
-  build_runner: ^2.4.15
+  build_runner: ^2.9.0
 
   # dio网络请求日志工具 https://pub.dev/packages/pretty_dio_logger
   pretty_dio_logger: ^1.4.0
 
   # 日志记录工具 https://pub.dev/packages/logger
-  logger: ^2.5.0
+  logger: ^2.6.2
 
 flutter:
   uses-material-design: true

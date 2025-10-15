@@ -8,8 +8,7 @@ plugins {
 android {
     namespace = "com.joker.flutter_tdkit"
     compileSdk = flutter.compileSdkVersion
-//    ndkVersion = flutter.ndkVersion
-    ndkVersion = "27.0.12077973"
+    ndkVersion = flutter.ndkVersion
 
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
@@ -22,35 +21,62 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.joker.flutter_tdkit"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
 
-        // 只打包中文资源
-        resConfigs("zh")
-
-        // 只打包arm64-v8a架构
-        ndk {
-            abiFilters.add("arm64-v8a")
+        // 仅包括中文必要的语言资源
+        androidResources {
+            localeFilters += listOf("zh")
         }
     }
 
     buildTypes {
-        release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
+
+        debug {
+            // debug 下的签名配置
             signingConfig = signingConfigs.getByName("debug")
+            // debug 模式下包名后缀
+            applicationIdSuffix = ".debug"
+        }
+
+        release {
+            // release 下的签名配置
+            signingConfig = signingConfigs.getByName("debug")
+            // 是否启用代码压缩
+            isMinifyEnabled = true
+            // 资源压缩
+            isShrinkResources = true
+            // 配置ProGuard规则文件
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+    }
+
+    // 打包选项 - 排除不必要的文件
+    packagingOptions {
+        resources {
+            excludes += setOf(
+                "META-INF/DEPENDENCIES",
+                "META-INF/LICENSE",
+                "META-INF/LICENSE.txt",
+                "META-INF/license.txt",
+                "META-INF/NOTICE",
+                "META-INF/NOTICE.txt",
+                "META-INF/notice.txt",
+                "META-INF/ASL2.0",
+                "META-INF/*.kotlin_module"
+            )
         }
     }
 }
 
 dependencies {
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
 }
 
 flutter {

@@ -1,6 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:get/get.dart';
-import 'package:styled_widget/styled_widget.dart';
+import 'package:td_flutter_getx_template/core/design_system/extensions/extensions.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
 
 import '../../design_system/theme/shape.dart';
@@ -22,7 +22,7 @@ class ToastUtil {
               suffixIcon: TDIcons.close,
               onTap: (trigger) => hide(),
             )
-            .clipRRect(all: radiusDefault)
+            .clipRadius( radiusDefault)
             .marginSymmetric(horizontal: spaceHorizontalLarge);
       },
     );

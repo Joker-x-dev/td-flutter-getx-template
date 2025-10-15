@@ -5,6 +5,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import 'package:get/get.dart';
 import 'package:td_flutter_getx_template/routes/app_pages.dart';
+import 'package:td_flutter_getx_template/routes/main/main_routes.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
 
 import 'application.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
             defaultTransition: Transition.rightToLeft,
             // debug 模式下是否显示 Banner
             debugShowCheckedModeBanner: false,
-            initialRoute: Routes.MAIN,
+            initialRoute: MainRoutes.main,
             locale: const Locale('zh', 'CN'),
             theme: ThemeData(
               extensions: [themeData],

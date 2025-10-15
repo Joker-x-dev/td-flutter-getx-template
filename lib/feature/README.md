@@ -46,7 +46,7 @@ feature/
 ### 3. 代码组织规范
 ```dart
 // view 示例
-import 'package:styled_widget/styled_widget.dart';
+import 'package:td_flutter_getx_template/core/design_system/extensions/extensions.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
 
 class MeView extends BaseView<MeLogic> {
