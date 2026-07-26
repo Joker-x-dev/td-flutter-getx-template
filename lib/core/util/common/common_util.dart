@@ -62,12 +62,14 @@ class CommonUtil {
     String? msg,
   }) {
     if (response == null || response.code != AppConfig.successCode) {
-      if (toast)
+      if (toast) {
         ToastUtil.error(msg ?? response?.message ?? CommonKeys.loadFailed.tr);
-      if (dialog)
+      }
+      if (dialog) {
         AlertUtil.showFeedbackDialog(
           msg ?? response?.message ?? CommonKeys.loadFailed.tr,
         );
+      }
       // 不成功
       return false;
     }

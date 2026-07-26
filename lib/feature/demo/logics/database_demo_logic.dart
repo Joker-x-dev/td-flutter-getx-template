@@ -9,8 +9,14 @@ import '../localization/demo_keys.dart';
 ///
 /// 管理本地 Demo 表的增删查操作。
 class DatabaseDemoLogic extends BaseLogic {
+  /// 创建数据库示例页 Logic
+  ///
+  /// [demoRepository] 可选 Demo 仓库，测试与预览可注入隔离实现。
+  DatabaseDemoLogic({DemoRepository? demoRepository})
+    : _demoRepository = demoRepository ?? DemoRepository();
+
   /// Demo 数据仓库
-  final DemoRepository _demoRepository = DemoRepository();
+  final DemoRepository _demoRepository;
 
   /// Demo 记录列表
   final RxList<DemoEntity> items = <DemoEntity>[].obs;

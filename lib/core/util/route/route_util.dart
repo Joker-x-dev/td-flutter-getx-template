@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 /// 跳转到指定页面
@@ -245,11 +246,7 @@ Map<String, dynamic>? getCurrentArguments() {
 /// ```
 T? getTypedArguments<T>() {
   final args = getRawArguments();
-  try {
-    return args is T ? args : null;
-  } on Exception catch (_) {
-    return null;
-  }
+  return args is T ? args : null;
 }
 
 /// 获取当前路由参数中的特定值（仅适用于Map类型参数）
@@ -330,7 +327,7 @@ T? getArgument<T>(String key) {
 /// }
 /// ```
 bool? canPop() {
-  return Get.routing.isBack;
+  return Navigator.of(Get.context!).canPop();
 }
 
 /// 获取当前页面的路由名称

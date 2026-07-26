@@ -9,6 +9,12 @@ import '../states/base_refresh_demo_state.dart';
 ///
 /// 使用 [BaseRefreshLogic] 加载商品详情。
 class BaseRefreshDemoLogic extends BaseRefreshLogic<Goods> {
+  /// 创建 BaseRefresh 示例页 Logic
+  ///
+  /// [goodsRepository] 可选商品仓库，测试与预览可注入隔离实现。
+  BaseRefreshDemoLogic({GoodsRepository? goodsRepository})
+    : _goodsRepository = goodsRepository ?? GoodsRepository();
+
   /// BaseRefresh 示例页状态
   final BaseRefreshDemoState baseRefreshDemoState = BaseRefreshDemoState();
 
@@ -17,7 +23,7 @@ class BaseRefreshDemoLogic extends BaseRefreshLogic<Goods> {
   BaseRefreshDemoState get refreshState => baseRefreshDemoState;
 
   /// 商品数据仓库
-  final GoodsRepository _goodsRepository = GoodsRepository();
+  final GoodsRepository _goodsRepository;
 
   /// 商品详情请求
   @override

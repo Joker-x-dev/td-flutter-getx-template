@@ -1,9 +1,7 @@
 /// Demo 模块国际化键名
 ///
 /// 各类示例页面的标题、按钮、说明文案键名定义。
-class DemoKeys {
-  const DemoKeys._();
-
+abstract final class DemoKeys {
   //==================== 页面标题 ====================
 
   /// 网络请求示例

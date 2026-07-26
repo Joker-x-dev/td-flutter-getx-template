@@ -51,14 +51,22 @@ class UserService extends GetxService {
   /// 应在应用启动时调用一次。
   Future<void> initialize() async {
     final loggedIn = await _authStoreRepository.isLoggedIn();
-    isLoggedIn.value = loggedIn;
-    auth.value = await _authStoreRepository.getAuth();
-
-    if (loggedIn) {
-      final user = await _userInfoStoreRepository.getUserInfo();
-      userInfo.value = user;
-      userId.value = user?.id ?? 0;
+    if (!loggedIn) {
+      isLoggedIn.value = false;
+      auth.value = null;
+      userInfo.value = null;
+      userId.value = 0;
+      return;
     }
+
+    final storedAuth = await _authStoreRepository.getAuth();
+    final user = await _userInfoStoreRepository.getUserInfo();
+
+    // 仓库读取全部成功后再提交内存状态，避免初始化失败产生部分更新。
+    isLoggedIn.value = true;
+    auth.value = storedAuth;
+    userInfo.value = user;
+    userId.value = user?.id ?? 0;
   }
 
   /// 更新登录状态并持久化认证信息与用户信息
@@ -99,13 +107,29 @@ class UserService extends GetxService {
   ///
   /// 清除本地存储的认证信息、用户信息，并重置内存状态。
   Future<void> logout() async {
-    await _authStoreRepository.clearAuth();
-    await _userInfoStoreRepository.clearUserInfo();
+    Object? clearError;
+    StackTrace? clearStackTrace;
+    try {
+      await _authStoreRepository.clearAuth();
+    } on Object catch (error, stackTrace) {
+      clearError = error;
+      clearStackTrace = stackTrace;
+    }
+    try {
+      await _userInfoStoreRepository.clearUserInfo();
+    } on Object catch (error, stackTrace) {
+      clearError ??= error;
+      clearStackTrace ??= stackTrace;
+    }
 
     isLoggedIn.value = false;
     auth.value = null;
     userInfo.value = null;
     userId.value = 0;
+
+    if (clearError != null) {
+      Error.throwWithStackTrace(clearError, clearStackTrace!);
+    }
   }
 
   /// 判断当前访问令牌是否需要刷新

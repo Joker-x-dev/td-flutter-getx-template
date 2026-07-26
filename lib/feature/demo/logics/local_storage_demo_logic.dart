@@ -7,9 +7,15 @@ import 'package:flutter_kit/core/model/entity/user/user.dart';
 ///
 /// 通过 [UserInfoStoreRepository] 读写用户信息。
 class LocalStorageDemoLogic extends BaseLogic {
+  /// 创建本地存储示例页 Logic
+  ///
+  /// [userInfoStoreRepository] 可选用户信息仓库，测试与预览可注入隔离实现。
+  LocalStorageDemoLogic({UserInfoStoreRepository? userInfoStoreRepository})
+    : _userInfoStoreRepository =
+          userInfoStoreRepository ?? UserInfoStoreRepository();
+
   /// 用户信息存储仓库
-  final UserInfoStoreRepository _userInfoStoreRepository =
-      UserInfoStoreRepository();
+  final UserInfoStoreRepository _userInfoStoreRepository;
 
   /// 当前用户信息
   final Rxn<User> user = Rxn<User>();

@@ -44,7 +44,7 @@ class AuthStoreDataSourceImpl implements AuthStoreDataSource {
 
     try {
       return Auth.fromJson(jsonDecode(jsonString) as Map<String, dynamic>);
-    } on Exception {
+    } on Object {
       return null;
     }
   }

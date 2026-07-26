@@ -4,7 +4,7 @@
 
 ## 初始化与释放
 
-`BaseTabLogic` 混入 `GetTickerProviderStateMixin`。`onInit()` 根据 `tabList.length` 创建 `TabController`；当 `usePageView` 为 `true` 时再创建 `PageController`。`onClose()` 释放 `TabController`，避免 ticker 泄漏。当前实现的 `PageController` 由 Logic 持有，复杂页面如自行替换它，应在自身 `onClose()` 中同步释放。
+`BaseTabLogic` 混入 `GetTickerProviderStateMixin`。`onInit()` 根据 `tabList.length` 创建 `TabController`；当 `usePageView` 为 `true` 时再创建 `PageController`。`onClose()` 同时释放 `TabController` 与 `PageController`，避免 ticker 和滚动控制器泄漏。复杂页面如自行替换控制器，仍由 Logic 生命周期统一释放。
 
 ## API
 

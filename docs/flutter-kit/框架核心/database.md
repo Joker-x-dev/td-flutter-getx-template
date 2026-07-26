@@ -29,6 +29,7 @@ Feature Logic → DemoRepository → DemoLocalDataSource → DatabaseProvider �
 | 版本 | `1` | 结构变更时递增并添加升级迁移 |
 | 表 | `demo_items` | 当前 Demo 表 |
 | 获取入口 | `DatabaseProvider().database` | 懒初始化后的共享 `Future<Database>` |
+| 释放入口 | `DatabaseProvider().close()` | 关闭当前连接并允许后续重新打开 |
 
 ```dart
 /// 数据库 Provider 在首次访问时打开数据库。
@@ -39,10 +40,42 @@ class DatabaseProvider {
   /// 延迟持有已打开的 sqflite 数据库。
   Database? _database;
 
+  /// 复用并发首次访问产生的打开任务。
+  Future<Database>? _databaseFuture;
+
   /// 所有 DataSource 通过此 getter 获取同一实例。
   Future<Database> get database async {
-    _database ??= await _initDatabase();
-    return _database!;
+    final Database? existingDatabase = _database;
+    if (existingDatabase != null && existingDatabase.isOpen) {
+      return existingDatabase;
+    }
+    final Future<Database>? openingDatabase = _databaseFuture;
+    if (openingDatabase != null) return openingDatabase;
+
+    final Future<Database> databaseFuture = _initDatabase();
+    _databaseFuture = databaseFuture;
+    try {
+      final Database openedDatabase = await databaseFuture;
+      _database = openedDatabase;
+      return openedDatabase;
+    } finally {
+      if (identical(_databaseFuture, databaseFuture)) {
+        _databaseFuture = null;
+      }
+    }
+  }
+
+  /// 关闭连接并清理缓存实例。
+  Future<void> close() async {
+    final Future<Database>? openingDatabase = _databaseFuture;
+    final Database? currentDatabase = openingDatabase == null
+        ? _database
+        : await openingDatabase;
+    _database = null;
+    _databaseFuture = null;
+    if (currentDatabase != null && currentDatabase.isOpen) {
+      await currentDatabase.close();
+    }
   }
 
   /// 首次打开时执行 onCreate 创建初始表结构。

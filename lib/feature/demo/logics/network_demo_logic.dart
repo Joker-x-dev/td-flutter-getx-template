@@ -9,6 +9,12 @@ import '../states/network_demo_state.dart';
 ///
 /// 通过 [BaseNetworkLogic] 自动加载商品详情。
 class NetworkDemoLogic extends BaseNetworkLogic<Goods> {
+  /// 创建网络请求示例页 Logic
+  ///
+  /// [goodsRepository] 可选商品仓库，测试与预览可注入隔离实现。
+  NetworkDemoLogic({GoodsRepository? goodsRepository})
+    : _goodsRepository = goodsRepository ?? GoodsRepository();
+
   /// 网络请求示例页状态
   final NetworkDemoState networkDemoState = NetworkDemoState();
 
@@ -17,7 +23,7 @@ class NetworkDemoLogic extends BaseNetworkLogic<Goods> {
   NetworkDemoState get networkState => networkDemoState;
 
   /// 商品数据仓库
-  final GoodsRepository _goodsRepository = GoodsRepository();
+  final GoodsRepository _goodsRepository;
 
   /// 商品详情请求
   @override

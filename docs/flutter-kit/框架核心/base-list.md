@@ -81,6 +81,7 @@ class NetworkListDemoView extends BaseListView<NetworkListDemoLogic, Goods> {
 首次成功时，`currentPage == 1`，父类以 `assignAll` 替换旧列表；加载更多时以 `addAll` 追加。父类根据 `pagination.total` 与 `pagination.size` 计算总页数；当前页达到总页数或总页数为零时设置 `noMoreData` 并结束 footer 为 `noMore`。
 
 请求失败时：若当前列表为空，页面切为错误状态；无论是否已有数据，`EasyRefresh` 都结束为失败状态，因此已加载的内容不会被错误页覆盖。
+加载更多失败时页码会恢复到上一成功页，下一次重试仍请求同一页；下一页返回空列表时保留已有内容并标记无更多数据。
 
 ## Preview 写法
 

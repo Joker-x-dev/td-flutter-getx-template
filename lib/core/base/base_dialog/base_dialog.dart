@@ -119,14 +119,19 @@ abstract class BaseDialog extends StatelessWidget {
     final maxHeight =
         screenHeight - topPadding - bottomPadding - topMargin - bottomMargin;
 
+    final headWidget = head();
+    final bodyWidgets = body(context);
+    final bottomWidget = bottom(context);
+
     Widget dialogContent =
         [
-              if (CommonUtil.isNotNull(head())) head()!,
-              body(
-                context,
-              ).toColumn().scrollable(padding: pagePadding).flexible(),
-              if (CommonUtil.isNotNull(bottom(context)))
-                bottom(context)!.pad(bottom: bottomPadding),
+              if (CommonUtil.isNotNull(headWidget)) headWidget!,
+              bodyWidgets
+                  .toColumn()
+                  .scrollable(padding: pagePadding)
+                  .flexible(),
+              if (CommonUtil.isNotNull(bottomWidget))
+                bottomWidget!.pad(bottom: bottomPadding),
             ]
             .toColumn(mainAxisSize: MainAxisSize.min)
             .constrained(maxHeight: maxHeight);

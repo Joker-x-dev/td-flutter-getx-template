@@ -31,7 +31,7 @@ class UserInfoStoreDataSourceImpl implements UserInfoStoreDataSource {
 
     try {
       return User.fromJson(jsonDecode(jsonString) as Map<String, dynamic>);
-    } on Exception {
+    } on Object {
       return null;
     }
   }
@@ -57,7 +57,7 @@ class UserInfoStoreDataSourceImpl implements UserInfoStoreDataSource {
       });
 
       await StorageUtil.setString(_userInfoKey, jsonEncode(map));
-    } on Exception {
+    } on Object {
       // 更新失败时保留原始数据
     }
   }

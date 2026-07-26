@@ -6,7 +6,7 @@ import 'goods_spec.dart';
 part 'goods.g.dart';
 
 /// 商品模型
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Goods extends BaseEntity {
   /// 类型ID
   final int typeId;

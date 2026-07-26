@@ -1,7 +1,5 @@
 /// Demo 模块路由常量
-class DemoRoutes {
-  DemoRoutes._();
-
+abstract final class DemoRoutes {
   /// 网络请求示例页面
   static const String networkDemo = '/demo/network';
 

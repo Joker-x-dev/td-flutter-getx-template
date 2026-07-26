@@ -214,7 +214,11 @@ extension DecorationExtension on Widget {
   Widget backgroundBlendMode(BlendMode blendMode, {Key? key}) {
     return DecoratedBox(
       key: key,
-      decoration: BoxDecoration(backgroundBlendMode: blendMode),
+      decoration: BoxDecoration(
+        // BoxDecoration 要求 blendMode 必须与背景颜色或渐变同时存在。
+        color: Colors.transparent,
+        backgroundBlendMode: blendMode,
+      ),
       child: this,
     );
   }

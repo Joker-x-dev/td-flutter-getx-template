@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 /// List 的 ListView 扩展
 ///
@@ -83,6 +84,7 @@ extension DataListViewExtension<T> on List<T> {
     bool addRepaintBoundaries = true,
     bool addSemanticIndexes = true,
     double? cacheExtent,
+    ScrollCacheExtent? scrollCacheExtent,
     DragStartBehavior dragStartBehavior = DragStartBehavior.start,
     ScrollViewKeyboardDismissBehavior keyboardDismissBehavior =
         ScrollViewKeyboardDismissBehavior.manual,
@@ -105,7 +107,9 @@ extension DataListViewExtension<T> on List<T> {
       addAutomaticKeepAlives: addAutomaticKeepAlives,
       addRepaintBoundaries: addRepaintBoundaries,
       addSemanticIndexes: addSemanticIndexes,
-      cacheExtent: cacheExtent,
+      scrollCacheExtent:
+          scrollCacheExtent ??
+          (cacheExtent == null ? null : ScrollCacheExtent.pixels(cacheExtent)),
       dragStartBehavior: dragStartBehavior,
       keyboardDismissBehavior: keyboardDismissBehavior,
       restorationId: restorationId,
@@ -166,6 +170,7 @@ extension DataListViewExtension<T> on List<T> {
     bool addRepaintBoundaries = true,
     bool addSemanticIndexes = true,
     double? cacheExtent,
+    ScrollCacheExtent? scrollCacheExtent,
     DragStartBehavior dragStartBehavior = DragStartBehavior.start,
     ScrollViewKeyboardDismissBehavior keyboardDismissBehavior =
         ScrollViewKeyboardDismissBehavior.manual,
@@ -187,7 +192,9 @@ extension DataListViewExtension<T> on List<T> {
       addAutomaticKeepAlives: addAutomaticKeepAlives,
       addRepaintBoundaries: addRepaintBoundaries,
       addSemanticIndexes: addSemanticIndexes,
-      cacheExtent: cacheExtent,
+      scrollCacheExtent:
+          scrollCacheExtent ??
+          (cacheExtent == null ? null : ScrollCacheExtent.pixels(cacheExtent)),
       dragStartBehavior: dragStartBehavior,
       keyboardDismissBehavior: keyboardDismissBehavior,
       restorationId: restorationId,
@@ -256,6 +263,7 @@ extension DataListViewExtension<T> on List<T> {
     bool addRepaintBoundaries = true,
     bool addSemanticIndexes = true,
     double? cacheExtent,
+    ScrollCacheExtent? scrollCacheExtent,
     int? semanticChildCount,
     DragStartBehavior dragStartBehavior = DragStartBehavior.start,
     ScrollViewKeyboardDismissBehavior keyboardDismissBehavior =
@@ -265,7 +273,7 @@ extension DataListViewExtension<T> on List<T> {
   }) {
     return ListView.builder(
       key: key,
-      itemCount: length,
+      itemCount: itemCount ?? length,
       itemBuilder: itemBuilder,
       scrollDirection: scrollDirection,
       reverse: reverse,
@@ -279,8 +287,10 @@ extension DataListViewExtension<T> on List<T> {
       addAutomaticKeepAlives: addAutomaticKeepAlives,
       addRepaintBoundaries: addRepaintBoundaries,
       addSemanticIndexes: addSemanticIndexes,
-      cacheExtent: cacheExtent,
-      semanticChildCount: semanticChildCount ?? length,
+      scrollCacheExtent:
+          scrollCacheExtent ??
+          (cacheExtent == null ? null : ScrollCacheExtent.pixels(cacheExtent)),
+      semanticChildCount: semanticChildCount ?? itemCount ?? length,
       dragStartBehavior: dragStartBehavior,
       keyboardDismissBehavior: keyboardDismissBehavior,
       restorationId: restorationId,
@@ -346,6 +356,7 @@ extension IntListViewExtension on int {
     bool addRepaintBoundaries = true,
     bool addSemanticIndexes = true,
     double? cacheExtent,
+    ScrollCacheExtent? scrollCacheExtent,
     DragStartBehavior dragStartBehavior = DragStartBehavior.start,
     ScrollViewKeyboardDismissBehavior keyboardDismissBehavior =
         ScrollViewKeyboardDismissBehavior.manual,
@@ -368,7 +379,9 @@ extension IntListViewExtension on int {
       addAutomaticKeepAlives: addAutomaticKeepAlives,
       addRepaintBoundaries: addRepaintBoundaries,
       addSemanticIndexes: addSemanticIndexes,
-      cacheExtent: cacheExtent,
+      scrollCacheExtent:
+          scrollCacheExtent ??
+          (cacheExtent == null ? null : ScrollCacheExtent.pixels(cacheExtent)),
       dragStartBehavior: dragStartBehavior,
       keyboardDismissBehavior: keyboardDismissBehavior,
       restorationId: restorationId,

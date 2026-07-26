@@ -53,8 +53,8 @@ class MyApp extends StatelessWidget {
               activeBrightness,
             ),
             child: GetMaterialApp(
-              // 页面切换动画
-              defaultTransition: Transition.rightToLeft,
+              // 平台原生转场支持 Android 预测性返回与 iOS 页面手势
+              defaultTransition: Transition.native,
               // debug 模式下是否显示 Banner
               debugShowCheckedModeBanner: false,
               // 国际化配置

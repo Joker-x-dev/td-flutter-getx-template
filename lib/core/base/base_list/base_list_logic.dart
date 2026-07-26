@@ -30,7 +30,14 @@ abstract class BaseListLogic<T> extends BaseNetworkLogic<BaseListResponse<T>> {
   void requestOk(BaseListResponse<T>? data) {
     final record = data?.list ?? [];
     if (CommonUtil.isBlank(record)) {
-      return updateListPageStatusEmpty();
+      if (listState.currentPage == 1) {
+        return updateListPageStatusEmpty();
+      }
+
+      // 下一页为空表示分页结束，保留已加载内容并结束加载更多。
+      listState.noMoreData = true;
+      setRefreshStatusNoMore();
+      return;
     }
 
     if (listState.currentPage == 1) {
@@ -69,6 +76,11 @@ abstract class BaseListLogic<T> extends BaseNetworkLogic<BaseListResponse<T>> {
   @override
   void onRequestError(String message, dynamic error) {
     super.onRequestError(message, error);
+    if (listState.currentPage > 1) {
+      // 加载更多失败时恢复到上一成功页，保证重试请求页码正确。
+      listState.currentPage--;
+      updatePageParams();
+    }
     // 请求失败时结束刷新动画，避免下拉刷新/上拉加载卡住
     if (listState.dataList.isEmpty) {
       super.setStatusError();

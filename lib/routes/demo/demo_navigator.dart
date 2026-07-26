@@ -6,9 +6,7 @@ import 'demo_routes.dart';
 /// Demo 模块导航器
 ///
 /// 提供所有 Demo 示例页的静态跳转方法。
-class DemoNavigator {
-  DemoNavigator._();
-
+abstract final class DemoNavigator {
   /// 跳转到网络请求示例页面
   static Future<T?>? toNetworkDemo<T>() {
     return toPage<T>(DemoRoutes.networkDemo);

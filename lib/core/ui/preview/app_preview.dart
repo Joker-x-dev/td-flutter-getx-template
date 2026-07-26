@@ -124,9 +124,15 @@ class _AppPreviewScopeState extends State<AppPreviewScope> {
   /// 返回项目主题数据；解析失败时回退到 TDesign 默认主题。
   Future<TDThemeData> _loadThemeData(AssetBundle bundle) async {
     TDTheme.needMultiTheme();
-    final String jsonString = await bundle.loadString('assets/json/theme.json');
-    return TDThemeData.fromJson('theme', jsonString, darkName: 'themeDark') ??
-        TDThemeData.defaultData();
+    try {
+      final String jsonString = await bundle.loadString(
+        'assets/json/theme.json',
+      );
+      return TDThemeData.fromJson('theme', jsonString, darkName: 'themeDark') ??
+          TDThemeData.defaultData();
+    } on Object {
+      return TDThemeData.defaultData();
+    }
   }
 
   /// 构建应用预览作用域

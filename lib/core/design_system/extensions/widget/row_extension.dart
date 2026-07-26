@@ -56,7 +56,10 @@ extension RowExtension on List<Widget> {
       for (int i = 0; i < length; i++) {
         finalChildren.add(this[i]);
         if (i < length - 1) {
-          finalChildren.add(separator);
+          // 分隔位置拥有独立父级 Key，允许复用带 LocalKey 的分隔组件。
+          finalChildren.add(
+            KeyedSubtree(key: ValueKey<int>(i), child: separator),
+          );
         }
       }
     }

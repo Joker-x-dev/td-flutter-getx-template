@@ -1,50 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
+
 import 'package:flutter_kit/core/service/user_service.dart';
 import 'package:flutter_kit/routes/auth/auth_routes.dart';
 import 'package:flutter_kit/routes/guards/auth_guard.dart';
 import 'package:flutter_kit/routes/user/user_pages.dart';
 import 'package:flutter_kit/routes/user/user_routes.dart';
 
-/// 登录态路由守卫测试
-///
-/// 验证受保护路由在不同登录状态下的导航结果。
+import '../../support/test_environment.dart';
+
+/// 登录态路由守卫和受保护路由配置测试。
 void main() {
   late UserService userService;
 
-  /// 注册测试所需的全局用户状态
-  setUp(() {
-    Get.testMode = true;
+  setUp(() async {
+    await initializeCoreTestEnvironment();
     userService = UserService();
     Get.put<UserService>(userService);
   });
 
-  /// 清理 GetX 测试容器
-  tearDown(() {
-    Get.reset();
-  });
+  tearDown(resetCoreTestEnvironment);
 
-  /// 验证未登录状态重定向到登录页
-  test('redirects to login when user is signed out', () {
-    final RouteSettings? result = AuthGuard().redirect('/user/info');
+  test('未登录访问受保护路由时重定向登录页', () {
+    final RouteSettings? result = AuthGuard().redirect(UserRoutes.userInfo);
 
     expect(result?.name, AuthRoutes.login);
   });
 
-  /// 验证已登录状态允许继续导航
-  test('allows navigation when user is signed in', () {
+  test('已登录访问受保护路由时继续导航', () {
     userService.isLoggedIn.value = true;
 
-    final RouteSettings? result = AuthGuard().redirect('/user/info');
+    final RouteSettings? result = AuthGuard().redirect(UserRoutes.userInfo);
 
     expect(result, isNull);
   });
 
-  /// 验证用户信息路由自动挂载登录守卫
-  test('protects user info route with auth guard', () {
-    final userInfoPage = UserPages.routes.singleWhere(
-      (page) => page.name == UserRoutes.userInfo,
+  test('用户信息路由声明认证守卫', () {
+    final GetPage<dynamic> userInfoPage = UserPages.routes.singleWhere(
+      (GetPage<dynamic> page) => page.name == UserRoutes.userInfo,
     );
 
     expect(userInfoPage.middlewares, contains(isA<AuthGuard>()));

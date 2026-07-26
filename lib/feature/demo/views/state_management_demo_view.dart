@@ -61,9 +61,6 @@ class StateManagementDemoView extends BaseView<StateManagementDemoLogic> {
                 ].toRowCenter(spacing: spaceHorizontalMedium),
               ]
               .toColumnCenter(spacing: spaceVerticalXLarge)
-              .padAll(spacePaddingLarge)
-              .backgroundColor(appTheme.backgroundContainer)
-              .clipRadius(radiusExtraLarge)
               .center(),
     );
   }

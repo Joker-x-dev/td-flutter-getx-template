@@ -29,9 +29,7 @@ import '../../feature/demo/views/theme_demo_view.dart';
 import 'demo_routes.dart';
 
 /// Demo 模块页面配置
-class DemoPages {
-  DemoPages._();
-
+abstract final class DemoPages {
   static final List<GetPage<void>> routes = [
     GetPage(
       name: DemoRoutes.networkDemo,

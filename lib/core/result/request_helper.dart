@@ -86,7 +86,8 @@ class RequestHelper<T> {
   /// 设置请求开始回调
   ///
   /// [onStart] 请求开始前的回调
-  RequestHelper<T> start(VoidCallback? onStart) => _copyWith(onStart: onStart);
+  RequestHelper<T> start(VoidCallback? onStart) =>
+      _copyWith(onStart: onStart, replaceOnStart: true);
 
   /// 设置是否显示 loading 对话框
   ///
@@ -106,14 +107,15 @@ class RequestHelper<T> {
   /// 设置自定义错误提示信息
   ///
   /// [msg] 失败时优先展示的提示文本
-  RequestHelper<T> errorMsg(String? msg) => _copyWith(errorMsg: msg);
+  RequestHelper<T> errorMsg(String? msg) =>
+      _copyWith(errorMsg: msg, replaceErrorMsg: true);
 
   /// 设置错误回调
   ///
   /// [onError] 请求失败时的回调，参数为格式化后的错误信息和原始异常
   RequestHelper<T> error(
     void Function(String message, dynamic error)? onError,
-  ) => _copyWith(onError: onError);
+  ) => _copyWith(onError: onError, replaceOnError: true);
 
   /// 复制请求辅助配置
   ///
@@ -123,6 +125,9 @@ class RequestHelper<T> {
   /// [errorMsg] 新的自定义错误提示信息。
   /// [onStart] 新的请求开始回调。
   /// [onError] 新的请求失败回调。
+  /// [replaceErrorMsg] 是否覆盖可空错误文案。
+  /// [replaceOnStart] 是否覆盖可空开始回调。
+  /// [replaceOnError] 是否覆盖可空错误回调。
   ///
   /// 返回合并配置后的 [RequestHelper]。
   RequestHelper<T> _copyWith({
@@ -132,14 +137,17 @@ class RequestHelper<T> {
     String? errorMsg,
     VoidCallback? onStart,
     void Function(String message, dynamic error)? onError,
+    bool replaceErrorMsg = false,
+    bool replaceOnStart = false,
+    bool replaceOnError = false,
   }) => RequestHelper<T>._(
     _promise,
     loading: loading ?? _loading,
     toast: toast ?? _toast,
     dialog: dialog ?? _dialog,
-    errorMsg: errorMsg ?? _errorMsg,
-    onStart: onStart ?? _onStart,
-    onError: onError ?? _onError,
+    errorMsg: replaceErrorMsg ? errorMsg : _errorMsg,
+    onStart: replaceOnStart ? onStart : _onStart,
+    onError: replaceOnError ? onError : _onError,
   );
 
   /// 执行请求并返回响应数据
@@ -175,7 +183,7 @@ class RequestHelper<T> {
       throw _BusinessFailure(message);
     } on _BusinessFailure {
       rethrow;
-    } on Exception catch (e, stackTrace) {
+    } on Object catch (e, stackTrace) {
       final formattedError = ErrorFormatter.formatError(e, stackTrace);
       _onError?.call(formattedError, e);
       _showErrorIfNeeded(formattedError);

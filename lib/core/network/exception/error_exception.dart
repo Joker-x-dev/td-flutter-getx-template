@@ -58,9 +58,17 @@ class CustomErrorHandler {
   ///
   /// 返回包含业务错误码和错误文案的统一错误信息。
   static BaseError handleBusinessError(Map<String, dynamic> responseData) {
-    final int code = (responseData['code'] as int?) ?? -1;
-    final String message =
-        (responseData['msg'] as String?) ?? NetworkKeys.errorBusinessUnknown.tr;
+    final dynamic rawCode = responseData['code'];
+    final int code = switch (rawCode) {
+      int value => value,
+      num value => value.toInt(),
+      String value => int.tryParse(value) ?? -1,
+      _ => -1,
+    };
+    final dynamic rawMessage = responseData['msg'] ?? responseData['message'];
+    final String message = rawMessage is String && rawMessage.isNotEmpty
+        ? rawMessage
+        : NetworkKeys.errorBusinessUnknown.tr;
 
     return BaseError(code: code, message: message);
   }

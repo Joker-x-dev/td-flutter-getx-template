@@ -35,7 +35,15 @@ abstract final class Env {
   );
 
   /// 当前环境的基础域名
-  static String get baseUrl {
+  static String get baseUrl => baseUrlForFlavor(flavor);
+
+  /// 获取指定环境的基础域名
+  ///
+  /// [flavor] 环境标识。
+  ///
+  /// 返回环境对应的基础域名。
+  @visibleForTesting
+  static String baseUrlForFlavor(String flavor) {
     return switch (flavor) {
       EnvProd.flavor => EnvProd.baseUrl,
       EnvPre.flavor => EnvPre.baseUrl,

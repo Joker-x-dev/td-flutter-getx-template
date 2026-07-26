@@ -1,29 +1,17 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
-/// Widget 动画图标扩展
-///
-/// 提供便捷的图标动画设置方法，支持颜色和大小的动画过渡
+/// Widget 图标隐式动画扩展。
 extension AnimatedIconExtension on Widget {
-  /// 设置动画图标
+  /// 创建支持颜色与尺寸重建补间的图标。
   ///
-  /// [icon] - 图标数据
-  /// [duration] - 动画持续时间
-  /// [curve] - 动画曲线
-  /// [color] - 图标颜色
-  /// [size] - 图标大小
-  /// [semanticLabel] - 语义标签
-  /// [textDirection] - 文本方向
-  ///
-  /// 示例：
-  /// ```dart
-  /// Container().animatedIcon(
-  ///   Icons.favorite,
-  ///   duration: Duration(milliseconds: 300),
-  ///   color: Colors.red,
-  ///   size: 24.0,
-  /// )
-  /// ```
+  /// [icon] 图标数据。
+  /// [duration] 动画时长。
+  /// [curve] 动画曲线。
+  /// [color] 目标颜色。
+  /// [size] 目标尺寸。
+  /// [semanticLabel] 语义标签。
+  /// [textDirection] 文本方向。
   Widget animatedIcon(
     IconData icon, {
     Duration duration = const Duration(milliseconds: 300),
@@ -33,276 +21,185 @@ extension AnimatedIconExtension on Widget {
     String? semanticLabel,
     TextDirection? textDirection,
   }) {
-    return _StyledInheritedAnimation(
-      animation: _StyledAnimatedModel(duration: duration, curve: curve),
-      child: _StyledAnimatedIconContainer(
-        icon,
-        color: color,
-        size: size,
-        semanticLabel: semanticLabel,
-        textDirection: textDirection,
-      ),
+    final Icon source = Icon(
+      icon,
+      color: color,
+      size: size,
+      semanticLabel: semanticLabel,
+      textDirection: textDirection,
+    );
+    return _AnimatedExtensionIcon(
+      source: source,
+      targetColor: color,
+      targetSize: size,
+      duration: duration,
+      curve: curve,
     );
   }
 
-  /// 设置动画图标颜色
+  /// 动画化现有 [Icon] 的颜色。
   ///
-  /// [color] - 图标颜色
-  /// [duration] - 动画持续时间
-  /// [curve] - 动画曲线
+  /// [color] 目标颜色。
+  /// [duration] 动画时长。
+  /// [curve] 动画曲线。
   ///
-  /// 示例：
-  /// ```dart
-  /// Icon(Icons.star).animatedIconColor(
-  ///   Colors.yellow,
-  ///   duration: Duration(milliseconds: 200),
-  /// )
-  /// ```
+  /// 非 [Icon] 接收者保持原样返回。
   Widget animatedIconColor(
     Color color, {
     Duration duration = const Duration(milliseconds: 300),
     Curve curve = Curves.linear,
   }) {
-    return _StyledInheritedAnimation(
-      animation: _StyledAnimatedModel(duration: duration, curve: curve),
-      child: this,
-    );
+    if (this case final _AnimatedExtensionIcon source) {
+      return _AnimatedExtensionIcon(
+        key: source.key,
+        source: source.source,
+        targetColor: color,
+        targetSize: source.targetSize,
+        duration: duration,
+        curve: curve,
+      );
+    }
+    if (this case final Icon source) {
+      return _AnimatedExtensionIcon(
+        key: source.key,
+        source: source,
+        targetColor: color,
+        targetSize: source.size,
+        duration: duration,
+        curve: curve,
+      );
+    }
+    return this;
   }
 
-  /// 设置动画图标大小
+  /// 动画化现有 [Icon] 的尺寸。
   ///
-  /// [size] - 图标大小
-  /// [duration] - 动画持续时间
-  /// [curve] - 动画曲线
+  /// [size] 目标尺寸。
+  /// [duration] 动画时长。
+  /// [curve] 动画曲线。
   ///
-  /// 示例：
-  /// ```dart
-  /// Icon(Icons.home).animatedIconSize(
-  ///   32.0,
-  ///   duration: Duration(milliseconds: 250),
-  ///   curve: Curves.easeInOut,
-  /// )
-  /// ```
+  /// 非 [Icon] 接收者保持原样返回。
   Widget animatedIconSize(
     double size, {
     Duration duration = const Duration(milliseconds: 300),
     Curve curve = Curves.linear,
   }) {
-    return _StyledInheritedAnimation(
-      animation: _StyledAnimatedModel(duration: duration, curve: curve),
-      child: this,
-    );
-  }
-}
-
-/// 动画模型类，用于存储动画配置
-class _StyledAnimatedModel {
-  /// 动画持续时间
-  final Duration duration;
-
-  /// 动画曲线
-  final Curve curve;
-
-  /// 创建动画模型
-  ///
-  /// [duration] 动画持续时间
-  /// [curve] 动画曲线，默认为线性
-  _StyledAnimatedModel({required this.duration, this.curve = Curves.linear});
-}
-
-/// 继承的动画配置 Widget
-class _StyledInheritedAnimation extends InheritedWidget {
-  /// 动画配置模型
-  final _StyledAnimatedModel? animation;
-
-  /// 创建继承的动画配置 Widget
-  ///
-  /// [animation] 动画配置模型
-  /// [child] 子 Widget
-  _StyledInheritedAnimation({Key? key, this.animation, required Widget child})
-    : super(key: key, child: child);
-
-  /// 判断是否需要通知依赖的 Widget 更新
-  ///
-  /// [oldAnimation] 上一次构建使用的动画配置。
-  @override
-  bool updateShouldNotify(_StyledInheritedAnimation oldAnimation) =>
-      !(oldAnimation.animation?.duration == animation?.duration &&
-          oldAnimation.animation?.curve == animation?.curve);
-
-  /// 从上下文中获取最近的动画配置
-  ///
-  /// [context] 当前构建上下文。
-  static _StyledInheritedAnimation? of(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<_StyledInheritedAnimation>();
-}
-
-/// 样式化动画图标容器
-/// 继承自 Icon，支持动画效果
-class _StyledAnimatedIconContainer extends Icon {
-  /// 图标数据
-  final IconData? icon;
-
-  /// 图标大小
-  final double? size;
-
-  /// 图标颜色
-  final Color? color;
-
-  /// 语义标签
-  final String? semanticLabel;
-
-  /// 文本方向
-  final TextDirection? textDirection;
-
-  /// 创建样式化动画图标容器
-  ///
-  /// [icon] 图标数据
-  /// [color] 图标颜色
-  /// [semanticLabel] 语义标签
-  /// [size] 图标大小
-  /// [textDirection] 文本方向
-  _StyledAnimatedIconContainer(
-    this.icon, {
-    this.color,
-    this.semanticLabel,
-    this.size,
-    this.textDirection,
-  }) : super(
-         icon,
-         color: color,
-         semanticLabel: semanticLabel,
-         size: size,
-         textDirection: textDirection,
-       );
-
-  /// 构建 Widget
-  ///
-  /// [context] 当前构建上下文。
-  @override
-  Widget build(BuildContext context) {
-    _StyledAnimatedModel? animation = _StyledInheritedAnimation.of(
-      context,
-    )?.animation;
-    if (animation == null) {
-      return super.build(context);
+    if (this case final _AnimatedExtensionIcon source) {
+      return _AnimatedExtensionIcon(
+        key: source.key,
+        source: source.source,
+        targetColor: source.targetColor,
+        targetSize: size,
+        duration: duration,
+        curve: curve,
+      );
     }
-    return _AnimatedIcon(
-      icon,
-      duration: animation.duration,
-      curve: animation.curve,
-      color: color,
-      semanticLabel: semanticLabel,
-      size: size,
-      textDirection: textDirection,
-    );
+    if (this case final Icon source) {
+      return _AnimatedExtensionIcon(
+        key: source.key,
+        source: source,
+        targetColor: source.color,
+        targetSize: size,
+        duration: duration,
+        curve: curve,
+      );
+    }
+    return this;
   }
 }
 
-/// 动画图标 Widget
-/// 支持颜色和大小的动画过渡
-class _AnimatedIcon extends ImplicitlyAnimatedWidget {
-  /// 创建一个隐式动画的图标
-  ///
-  /// [icon] 图标数据
-  /// [color] 图标颜色
-  /// [semanticLabel] 语义标签
-  /// [size] 图标大小
-  /// [textDirection] 文本方向
-  /// [curve] 动画曲线，默认为线性
-  /// [duration] 动画持续时间，不能为 null
-  _AnimatedIcon(
-    this.icon, {
-    Key? key,
-    this.color,
-    this.semanticLabel,
-    this.size,
-    this.textDirection,
-    Curve curve = Curves.linear,
-    required Duration duration,
-  }) : super(key: key, curve: curve, duration: duration);
+/// 保留 Icon 公共字段并补间颜色和尺寸的隐式动画组件。
+class _AnimatedExtensionIcon extends ImplicitlyAnimatedWidget {
+  /// 创建图标隐式动画组件。
+  const _AnimatedExtensionIcon({
+    super.key,
+    required this.source,
+    required this.targetColor,
+    required this.targetSize,
+    required super.duration,
+    required super.curve,
+  });
 
-  /// 图标数据
-  final IconData? icon;
+  /// 原始图标配置。
+  final Icon source;
 
-  /// 图标大小
-  final double? size;
+  /// 目标颜色。
+  final Color? targetColor;
 
-  /// 图标颜色
-  final Color? color;
+  /// 目标尺寸。
+  final double? targetSize;
 
-  /// 语义标签
-  final String? semanticLabel;
-
-  /// 文本方向
-  final TextDirection? textDirection;
-
-  /// 创建状态
+  /// 创建图标动画状态。
   @override
-  _AnimatedIconState createState() => _AnimatedIconState();
+  AnimatedWidgetBaseState<_AnimatedExtensionIcon> createState() =>
+      _AnimatedExtensionIconState();
 
-  /// 填充调试属性
-  ///
-  /// [properties] 调试属性构建器。
+  /// 输出可诊断的目标属性。
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<IconData>('icon', icon));
-    properties.add(DoubleProperty('size', size));
-    properties.add(ColorProperty('color', color));
+    properties
+      ..add(DiagnosticsProperty<IconData>('icon', source.icon))
+      ..add(ColorProperty('color', targetColor))
+      ..add(DoubleProperty('size', targetSize));
   }
 }
 
-/// 动画图标状态类
-class _AnimatedIconState extends AnimatedWidgetBaseState<_AnimatedIcon> {
-  /// 颜色动画补间
+/// 管理图标颜色与尺寸补间。
+class _AnimatedExtensionIconState
+    extends AnimatedWidgetBaseState<_AnimatedExtensionIcon> {
+  /// 颜色补间。
   ColorTween? _color;
 
-  /// 大小动画补间
+  /// 尺寸补间。
   Tween<double>? _size;
 
-  /// 遍历所有补间动画
-  ///
-  /// [visitor] Flutter 隐式动画补间访问器。
+  /// 更新颜色与尺寸补间。
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
     _color =
         visitor(
               _color,
-              widget.color,
+              widget.targetColor,
               (dynamic value) => ColorTween(begin: value as Color),
             )
             as ColorTween?;
     _size =
         visitor(
               _size,
-              widget.size,
+              widget.targetSize,
               (dynamic value) => Tween<double>(begin: value as double),
             )
             as Tween<double>?;
   }
 
-  /// 构建 Widget
-  ///
-  /// [context] 当前构建上下文。
+  /// 构建当前补间值对应的图标。
   @override
   Widget build(BuildContext context) {
+    final Icon source = widget.source;
     return Icon(
-      widget.icon,
-      semanticLabel: widget.semanticLabel,
-      textDirection: widget.textDirection,
-      color: _color?.evaluate(animation),
+      source.icon,
       size: _size?.evaluate(animation),
+      fill: source.fill,
+      weight: source.weight,
+      grade: source.grade,
+      opticalSize: source.opticalSize,
+      color: _color?.evaluate(animation),
+      shadows: source.shadows,
+      semanticLabel: source.semanticLabel,
+      textDirection: source.textDirection,
+      applyTextScaling: source.applyTextScaling,
+      blendMode: source.blendMode,
+      fontWeight: source.fontWeight,
     );
   }
 
-  /// 填充调试属性
-  ///
-  /// [description] 调试属性构建器。
+  /// 输出补间诊断属性。
   @override
-  void debugFillProperties(DiagnosticPropertiesBuilder description) {
-    super.debugFillProperties(description);
-    description.add(DiagnosticsProperty<ColorTween>('color', _color));
-    description.add(DiagnosticsProperty<Tween<double>>('size', _size));
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<ColorTween>('color', _color))
+      ..add(DiagnosticsProperty<Tween<double>>('size', _size));
   }
 }

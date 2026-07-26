@@ -21,7 +21,7 @@ Map<String, dynamic> _$BaseListResponseToJson<T>(
   Object? Function(T value) toJsonT,
 ) => <String, dynamic>{
   'list': instance.list?.map(toJsonT).toList(),
-  'pagination': instance.pagination,
+  'pagination': instance.pagination?.toJson(),
 };
 
 PageMeta _$PageMetaFromJson(Map<String, dynamic> json) => PageMeta(

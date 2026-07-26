@@ -261,6 +261,13 @@ extension TextExtension on Text {
     return copyWith(textDirection: direction);
   }
 
+  /// 设置文本方向并避免与 [Text.textDirection] 字段重名。
+  ///
+  /// [direction] 文本方向。
+  Text withTextDirection(TextDirection? direction) {
+    return copyWith(textDirection: direction);
+  }
+
   /// 设置文本基线
   ///
   /// [textBaseline] 文本基线
@@ -278,6 +285,13 @@ extension TextExtension on Text {
   /// [textWidthBasis] 文本宽度基准
   /// 返回应用了文本宽度基准的 Text Widget
   Text textWidthBasis(TextWidthBasis? textWidthBasis) {
+    return copyWith(textWidthBasis: textWidthBasis);
+  }
+
+  /// 设置文本宽度基准并避免与 [Text.textWidthBasis] 字段重名。
+  ///
+  /// [textWidthBasis] 文本宽度基准。
+  Text withTextWidthBasis(TextWidthBasis? textWidthBasis) {
     return copyWith(textWidthBasis: textWidthBasis);
   }
 }

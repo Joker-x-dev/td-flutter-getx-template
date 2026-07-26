@@ -102,6 +102,10 @@ dev_dependencies:
   # 地址：https://pub.dev/packages/flutter_native_splash
   flutter_native_splash: ^2.4.8
 
+  # SQLite 桌面测试运行时，用于验证真实建表与 CRUD 行为
+  # 地址：https://pub.dev/packages/sqflite_common_ffi
+  sqflite_common_ffi: ^2.4.2
+
 # FlutterGen 资源配置，根据 pubspec.yaml 中声明的 assets/fonts/colors 生成类型安全的资源访问类
 # 地址：https://pub.dev/packages/flutter_gen
 flutter_gen:

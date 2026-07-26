@@ -29,6 +29,9 @@ abstract class BaseTabLogic extends BaseLogic with GetTickerProviderStateMixin {
   void onClose() {
     super.onClose();
     tabState.tabController?.dispose();
+    tabState.tabController = null;
+    tabState.pageController?.dispose();
+    tabState.pageController = null;
   }
 
   /// tab点击/改变
@@ -68,7 +71,11 @@ abstract class BaseTabLogic extends BaseLogic with GetTickerProviderStateMixin {
   ///
   /// [index] 目标 PageView 页面下标。
   void setPageView(int index) {
-    tabState.pageController?.animateToPage(
+    final PageController? pageController = tabState.pageController;
+    if (pageController == null || !pageController.hasClients) {
+      return;
+    }
+    pageController.animateToPage(
       index,
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,

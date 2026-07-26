@@ -337,6 +337,21 @@ class _AnimatedTapScaleWidgetState extends State<_AnimatedTapScaleWidget>
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
+  /// 同步重建后的动画时长与目标缩放比例。
+  @override
+  void didUpdateWidget(covariant _AnimatedTapScaleWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.duration != widget.duration) {
+      _controller.duration = widget.duration;
+    }
+    if (oldWidget.scaleValue != widget.scaleValue) {
+      _scaleAnimation = Tween<double>(
+        begin: 1.0,
+        end: widget.scaleValue,
+      ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+    }
+  }
+
   /// 释放缩放动画控制器
   @override
   void dispose() {
@@ -446,6 +461,21 @@ class _AnimatedHoverWidgetState extends State<_AnimatedHoverWidget>
       begin: 1.0,
       end: widget.scale,
     ).animate(CurvedAnimation(parent: _controller, curve: widget.curve));
+  }
+
+  /// 同步重建后的悬停动画配置。
+  @override
+  void didUpdateWidget(covariant _AnimatedHoverWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.duration != widget.duration) {
+      _controller.duration = widget.duration;
+    }
+    if (oldWidget.scale != widget.scale || oldWidget.curve != widget.curve) {
+      _scaleAnimation = Tween<double>(
+        begin: 1.0,
+        end: widget.scale,
+      ).animate(CurvedAnimation(parent: _controller, curve: widget.curve));
+    }
   }
 
   /// 释放悬停动画控制器

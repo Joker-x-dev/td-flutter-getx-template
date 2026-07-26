@@ -407,7 +407,8 @@ extension TransformExtension on Widget {
   }) {
     Matrix4 combinedTransform = Matrix4.identity();
     for (final transform in transforms) {
-      combinedTransform = combinedTransform * transform;
+      // 按声明顺序在当前矩阵上累积变换，避免乘法运算符返回 dynamic。
+      combinedTransform.multiply(transform);
     }
     
     return transform(

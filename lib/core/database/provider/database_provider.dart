@@ -17,6 +17,9 @@ class DatabaseProvider {
   /// 已打开的数据库实例
   Database? _database;
 
+  /// 正在执行的数据库打开任务
+  Future<Database>? _databaseFuture;
+
   /// 数据库文件名称
   static const String _databaseName = 'app_database.db';
 
@@ -28,8 +31,43 @@ class DatabaseProvider {
 
   /// 获取已初始化的数据库实例
   Future<Database> get database async {
-    _database ??= await _initDatabase();
-    return _database!;
+    final existingDatabase = _database;
+    if (existingDatabase != null && existingDatabase.isOpen) {
+      return existingDatabase;
+    }
+
+    final openingDatabase = _databaseFuture;
+    if (openingDatabase != null) {
+      return openingDatabase;
+    }
+
+    final databaseFuture = _initDatabase();
+    _databaseFuture = databaseFuture;
+    try {
+      final openedDatabase = await databaseFuture;
+      _database = openedDatabase;
+      return openedDatabase;
+    } finally {
+      if (identical(_databaseFuture, databaseFuture)) {
+        _databaseFuture = null;
+      }
+    }
+  }
+
+  /// 关闭数据库并清理缓存实例
+  ///
+  /// 后续访问 [database] 时会重新打开数据库。
+  Future<void> close() async {
+    final openingDatabase = _databaseFuture;
+    final currentDatabase = openingDatabase == null
+        ? _database
+        : await openingDatabase;
+
+    _database = null;
+    _databaseFuture = null;
+    if (currentDatabase != null && currentDatabase.isOpen) {
+      await currentDatabase.close();
+    }
   }
 
   /// 初始化并打开本地数据库

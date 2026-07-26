@@ -58,6 +58,10 @@ class ErrorFormatter {
       return ErrorType.parseError;
     } else if (errorString.contains('TimeoutException')) {
       return ErrorType.timeoutError;
+    } else if (errorString.contains('HttpException') ||
+        errorString.contains('DioException [bad response]') ||
+        errorString.contains('status code')) {
+      return ErrorType.serverError;
     } else {
       return ErrorType.unknownError;
     }

@@ -60,8 +60,13 @@ abstract class BaseNetworkLogic<T> extends BaseLogic {
           })
           .execute();
 
+      if (data == null) {
+        setStatusEmpty();
+        return;
+      }
+
       final NetState stateBeforeRequestOk = networkState.uiState.value;
-      requestOk(data as T);
+      requestOk(data);
       if (networkState.uiState.value == stateBeforeRequestOk) {
         setStatusSuccess();
       }

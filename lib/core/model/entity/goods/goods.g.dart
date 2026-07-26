@@ -47,5 +47,5 @@ Map<String, dynamic> _$GoodsToJson(Goods instance) => <String, dynamic>{
   'featured': instance.featured,
   'status': instance.status,
   'sortNum': instance.sortNum,
-  'specs': instance.specs,
+  'specs': instance.specs?.map((e) => e.toJson()).toList(),
 };
